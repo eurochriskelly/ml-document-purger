@@ -33,12 +33,6 @@ main() {
     exit 1
   fi
 
-  # Generate -DXCC-CONNECTION-URI variable
-  connection_uri=""
-  for host in "${ML_HOSTS[@]}"; do
-    connection_uri+="${ML_XCC_PROTOCOL}://${ML_USER}:${ML_PASS}@${host}:${ML_PORT},"
-  done
-  connection_uri=${connection_uri%,} # remove the last comma
 
   # Ensure there are no invisible characters
   connection_uri=$(echo $connection_uri | tr -d '\r\n')
@@ -50,7 +44,10 @@ main() {
   cat src/purge.properties.tmp
   corbOpts=(
     -server -cp .:$CORB_JAR:$XCC_JAR
-    "-DXCC-CONNECTION-URI=$connection_uri"
+    "-DXCC-USERNAME=$ML_USER"
+    "-DXCC-PASSWORD=$ML_PASS"
+    "-DXCC-PORT=$ML_PORT"
+    "-DXCC-HOSTNAME=$ML_HOST"
     -DOPTIONS-FILE="src/purge.properties.tmp"
     -DEXPORT-FILE-NAME="$dataReport"
   )

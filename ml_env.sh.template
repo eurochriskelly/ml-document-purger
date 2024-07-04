@@ -7,4 +7,5 @@ export ML_HOSTS=localhost
 # XCC protocol can be either xcc or xccs
 export ML_XCC_PROTOCOL=xcc
 export ML_PORT=8000
+export ML_DATABASE=content
 
